@@ -6,7 +6,7 @@ import List from './components/List';
 const getLocalStorage = () => {
   let list = localStorage.getItem("list")
   if (list) {
-    return (list = JSON.parse(localStorage.getItem("list")))
+    return (JSON.parse(list))
   } else {
     return []
   }
@@ -15,15 +15,15 @@ function App() {
   const [name, setName] = useState("")
   const [list, setList] = useState(getLocalStorage())
   const [isEditing, setIsEditing] = useState(false)
-  const [editID, setEditiID] = useState(null)
+  const [editID, setEditId] = useState(null)
 
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list))
   }, [list])
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = (event) => {
+    event.preventDefault()
     if (!name) {
       alert("please enter a task")
     } else if (name && isEditing) {
@@ -36,7 +36,7 @@ function App() {
         })
       )
       setName("")
-      setEditiID(null)
+      setEditId(null)
       setIsEditing(false)
     } else {
       const newItem = { id: nanoid(), title: name, completed: false }
@@ -51,7 +51,7 @@ function App() {
   const editItem = (id) => {
     const editItem = list.find((item) => item.id === id)
     setIsEditing(true)
-    setEditiID(id)
+    setEditId(id)
     setName(editItem.title)
 
   }
@@ -68,7 +68,7 @@ function App() {
     <section className='flex flex-col items-center gap-10 py-20'>
       <h1 className='text-4xl uppercase font-bold'>react todo</h1>
       <form onSubmit={handleSubmit} className="flex gap-4">
-        <input type="text" placeholder='add task' onChange={(e) => setName(e.target.value)} value={name} className="underline-none border py-4 px-10 rounded shadow-lg" />
+        <input type="text" placeholder='add task' onChange={(event) => setName(event.target.value)} value={name} className="underline-none border py-4 px-10 rounded shadow-lg" />
         <button className='bg-blue-600 py-3 px-5 text-white font-medium rounded' type='submit'>{isEditing ? "edit" : "add"}</button>
       </form>
       {list.length > 0 && (

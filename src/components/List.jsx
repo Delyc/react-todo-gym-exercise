@@ -3,13 +3,12 @@ const List = ({ items, removeItem, editItem, markCompleted }) => {
         <>
             <div className="flex flex-col gap-4">
                 {items.map((item) => {
-                    console.log(item.completed)
-                    const { id, title } = item
+                    const { id, title, completed } = item
                     return (
                         <ul key={id} className="w-full">
                             <li className="flex items-center gap-2 border-b py-4 w-full">
                                 <div className="w-1/2 flex gap-2 items-center">
-                                <input type="checkbox" onClick={() => markCompleted(id)} />
+                                <input type="checkbox" checked={completed} onChange={() => markCompleted(id)} />
                                 <p className={ `${item.completed === true ? "line-through" : " "} w-5/6 break-words`}>
                                     {title}
                                 </p>
